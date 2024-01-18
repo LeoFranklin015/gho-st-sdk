@@ -1,0 +1,23 @@
+{
+  "name": "gho-st-sdk",
+  "version": "0.0.6",
+  "description": "",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@aave/contract-helpers": "^1.22.0",
+    "@aave/math-utils": "^1.22.0",
+    "ethers": "^5.7.2"
+  }
+}
