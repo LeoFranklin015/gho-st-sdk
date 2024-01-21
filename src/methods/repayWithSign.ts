@@ -2,12 +2,13 @@ import {
   EthereumTransactionTypeExtended,
   ERC20Service,
   ERC20_2612Service,
+  InterestRate,
 } from "@aave/contract-helpers";
 import { BigNumber as BigNumberJs } from "bignumber.js";
 import { BigNumber, ethers, constants, Signer } from "ethers";
 import { Pool } from "@aave/contract-helpers";
 
-interface SupplyOptions {
+interface RepayOptions {
   user: string;
   reserve: string;
   amount: string;
@@ -16,14 +17,14 @@ interface SupplyOptions {
   signer: Signer;
 }
 
-export async function supplyWithSign({
+export async function repayWithPermit({
   user,
   reserve,
   amount,
   onBehalfOf,
   provider,
   signer,
-}: SupplyOptions): Promise<void> {
+}: RepayOptions): Promise<void> {
   try {
     const pool = new Pool(provider, {
       POOL: "0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951", // sepolia
@@ -33,7 +34,7 @@ export async function supplyWithSign({
     console.log("Transaction");
     const deadline = Math.floor(Date.now() / 1000 + 3600).toString();
 
-    const data = await generateSupplySignatureRequest(
+    const data = await generateRepaySignatureRequest(
       user,
       reserve,
       amount,
@@ -41,6 +42,7 @@ export async function supplyWithSign({
       provider
     );
     console.log(data);
+
     const address = await signer.getAddress();
     const signature: string = await provider.send("eth_signTypedData_v4", [
       address,
@@ -48,13 +50,14 @@ export async function supplyWithSign({
     ]);
     console.log(signature);
 
-    const txs: EthereumTransactionTypeExtended[] = await pool.supplyWithPermit({
+    const txs: EthereumTransactionTypeExtended[] = await pool.repayWithPermit({
       user,
       reserve,
       amount,
       signature,
       onBehalfOf,
       deadline,
+      interestRateMode: InterestRate.Variable,
     });
 
     for (const tx of txs) {
@@ -66,22 +69,22 @@ export async function supplyWithSign({
       });
       console.log(txResponse);
     }
+
     console.log("Transaction Completed");
   } catch (error) {
     // Handle errors appropriately
-    console.error("Error in supply:", error);
-    // throw new Error(`Error in supply: ${error.message}`);
+    console.error("Error in repayWithPermit:", error);
+    // throw new Error(`Error in repayWithPermit: ${error.message}`);
   }
 }
 
-async function generateSupplySignatureRequest(
+async function generateRepaySignatureRequest(
   user: string,
   token: string,
   amount: string,
   deadline: string,
   provider: ethers.providers.Web3Provider
 ): Promise<string> {
-  // Assuming `pool` is an instance of Pool, replace it with your actual instance
   const spender = "0x6ae43d3271ff6888e7fc43fd7321a503ff738951"; // Assuming Pool has a method to get its address
   const tokenERC20Service = new ERC20Service(provider);
   const tokenERC2612Service = new ERC20_2612Service(provider);
