@@ -14,7 +14,7 @@ interface RepayWithaTokenProps {
   signer: Signer;
 }
 
-export async function RepayWithaToken({
+export async function repayWithaToken({
   user,
   reserve,
   amount,

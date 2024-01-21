@@ -15,15 +15,17 @@ interface RepayOptions {
   onBehalfOf: string;
   provider: ethers.providers.Web3Provider;
   signer: Signer;
+  interestRateMode: InterestRate;
 }
 
-export async function repayWithPermit({
+export async function repayWithSign({
   user,
   reserve,
   amount,
   onBehalfOf,
   provider,
   signer,
+  interestRateMode,
 }: RepayOptions): Promise<void> {
   try {
     const pool = new Pool(provider, {
@@ -57,7 +59,7 @@ export async function repayWithPermit({
       signature,
       onBehalfOf,
       deadline,
-      interestRateMode: InterestRate.Variable,
+      interestRateMode,
     });
 
     for (const tx of txs) {
