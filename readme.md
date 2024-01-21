@@ -1,8 +1,26 @@
-## Options
+## Overview
 
-### `supply(options: SupplyOptions): Promise<void>`
+The GHO-ST SDK simplifies interactions with the Aave protocol, providing functions for common actions like supplying funds.
 
-This function allows users to supply funds to a specified reserve.
+## Installation
+
+To use the GHO-ST SDK in your project, install it via npm:
+
+```bash
+npm install gho-st-sdk
+```
+
+To use the GHO-ST SDK in your project, install it via yarn:
+
+```bash
+yarn add gho-st-sdk
+```
+
+## Supply
+
+### `Usage`
+
+This function allows users to supply funds to a aave reserve.
 
 #### Parameters
 
@@ -23,10 +41,10 @@ const provider = new ethers.providers.Web3Provider(window.ethereum);
 const signer: Signer = provider.getSigner();
 
 await supply({
-  user: "0xafe79395A3279854BcDfE7C24e14e8715cB10A18",
-  reserve: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
-  amount: "100",
-  onBehalfOf: "0xafe79395A3279854BcDfE7C24e14e8715cB10A18",
+  user: "0xxxxxxxxxxx",
+  reserve: "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8", // USDC address
+  amount: "100", // Supplying 100 USDC to aave
+  onBehalfOf: "0xxxxxxxxxx",
   provider,
   signer,
 });
