@@ -49,3 +49,39 @@ await supply({
   signer,
 });
 ```
+
+## Borrow
+
+### `Usage`
+
+This function allows users to borrow funds from a aave .
+
+#### Parameters
+
+- `user` (string): User's Ethereum address.
+- `reserve` (string): Address of the reserve for fund borrowing.
+- `amount` (string): Amount to be borrowed.
+- `interestRateMode` (InterestRate): Interest rate mode for the borrow operation. It can be`( Variable | Stable)`
+- `onBehalfOf` (string): Address on behalf of which funds will be borrowed.
+- `provider` (ethers.providers.Web3Provider): Ethereum provider.
+- `signer` (ethers.Signer): Ethereum signer.
+
+#### Example
+
+```typescript
+import { borrow } from "gho-st-sdk";
+import { ethers, Signer, InterestRate } from "ethers";
+import { InterestRate } from "@aave/contract-helpers";
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer: Signer = provider.getSigner();
+
+await borrow({
+  user: "0xxxxxxxxxxx",
+  reserve: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60", //Gho contract address for sepolia;
+  amount: "100", // 100 GHO token is borrowed
+  interestRateMode: InterestRate.Variable,
+  onBehalfOf: "0xxxxxxxxxxxxxxxx",
+  provider,
+  signer,
+});
+```
