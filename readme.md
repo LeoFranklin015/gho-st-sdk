@@ -85,3 +85,75 @@ await borrow({
   signer,
 });
 ```
+
+## Withdraw
+
+### `Usage`
+
+This function allows users to withdraw funds from an Aave reserve.
+
+#### Parameters
+
+- `user` (string): User's Ethereum address.
+- `reserve` (string): Address of the reserve for fund withdrawal.
+- `amount` (string): Amount to be withdrawn.
+- `aTokenAddress` (string): Address of the corresponding aToken for the reserve.
+- `onBehalfOf` (string): Address on behalf of which funds will be withdrawn.
+- `provider` (ethers.providers.Web3Provider): Ethereum provider.
+- `signer` (ethers.Signer): Ethereum signer.
+
+#### Example
+
+```typescript
+import { withdraw } from "gho-st-sdk";
+import { ethers, Signer } from "ethers";
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer: Signer = provider.getSigner();
+
+await withdraw({
+  user: "0xxxxxxxxxxx",
+  reserve: "0xf8Fb3713D459D7C1018BD0A49D19b4C44290EBE5", // Example reserve address
+  amount: "50", // Withdrawing 50 units of the reserve
+  aTokenAddress: "0x3FfAf50D4F4E96eB78f2407c090b72e86eCaed24", // Example aToken address
+  onBehalfOf: "0xxxxxxxxxx",
+  provider,
+  signer,
+});
+```
+
+## Repay
+
+### `Usage`
+
+This function allows users to repay borrowed funds on an Aave reserve.
+
+#### Parameters
+
+- `user` (string): User's Ethereum address.
+- `reserve` (string): Address of the reserve for fund repayment.
+- `amount` (string): Amount to be repaid.
+- `interestRateMode` (enum): Interest rate mode for repayment (e.g., InterestRate.Variable).
+- `onBehalfOf` (string): Address on behalf of which funds will be repaid.
+- `provider` (ethers.providers.Web3Provider): Ethereum provider.
+- `signer` (ethers.Signer): Ethereum signer.
+
+#### Example
+
+```typescript
+import { Repay, InterestRate } from "gho-st-sdk";
+import { ethers, Signer } from "ethers";
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const signer: Signer = provider.getSigner();
+
+await Repay({
+  user: "0xxxxxxxxxxx",
+  reserve: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60", // Example reserve address
+  amount: "50", // Repaying 50 units of the reserve
+  interestRateMode: InterestRate.Variable,
+  onBehalfOf: "0xxxxxxxxxx",
+  provider,
+  signer,
+});
+```
