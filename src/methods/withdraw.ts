@@ -27,9 +27,9 @@ import {
   
       try {
         const pool = new Pool(provider, {
-            POOL: "0x6Ae43d3271ff6888e7Fc43Fd7321a503ff738951",
-            WETH_GATEWAY: "0xDde0E8E6d3653614878Bf5009EDC317BC129fE2F",
-          });
+          POOL: "0xcC6114B983E4Ed2737E9BD3961c9924e6216c704",
+          WETH_GATEWAY: "0xc24df0548a5aa08262bff6c2bb48048348e4E097",
+        });
         // Correct the method to borrow from Aave
         const txs: EthereumTransactionTypeExtended[] = await pool.withdraw({
           user,
